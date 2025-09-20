@@ -2,7 +2,7 @@ import React from 'react'
 
 const Library = () => {
   return (
-    <div>Library</div>
+    <div className='bg-[#f0eee3]'>Library</div>
   )
 }
 
