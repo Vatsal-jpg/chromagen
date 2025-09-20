@@ -6,8 +6,9 @@ import Loading from "./Pages/Loading";
 import Home from "./Pages/Home";
 import Preview from "./Pages/Preview";
 import Layout from "./Pages/Layout";
-import Genrate from "./Pages/Genrate";
+
 import Learning from "./Pages/Learning";
+import Library from "./Pages/Library";
 
 function App() {
   return (
@@ -34,10 +35,10 @@ function App() {
           }
         />
         <Route
-          path="/generate"
+          path="/library"
           element={
             <Layout>
-              <Genrate />
+              <Library />
             </Layout>
           }
         />

@@ -6,7 +6,7 @@ const Sidebar = () => {
   const navItems = [
     { name: "Home", path: "/home" },
     { name: "Preview", path: "/preview" },
-    { name: "Generate", path: "/generate" },
+    { name: "Library", path: "/library" },
     { name: "Learn", path: "/learn" },
   ];
 
