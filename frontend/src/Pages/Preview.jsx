@@ -296,10 +296,10 @@ const PaletteView = ({ palette, wcagCompliance, onCopyColor, copiedColor }) => (
           {/* Color Block */}
           <div
             className="h-48 relative cursor-pointer group"
-            style={{ backgroundColor: color.displayHex }}
+            style={{ backgroundColor: color.displayHex || color.hex }}
             onClick={() => onCopyColor(color.hex, color.id)}
           >
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
               <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white bg-opacity-90 rounded-lg px-3 py-2">
                 {copiedColor === color.id ? (
                   <div className="flex items-center gap-2 text-green-600">
@@ -438,7 +438,7 @@ const WebPreview = ({ palette }) => {
         {/* Cards Section */}
         <section 
           className="px-6 py-8"
-          style={{ backgroundColor: colors.secondary, opacity: 0.1 }}
+          style={{ backgroundColor: colors.secondary, }}
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
@@ -519,7 +519,7 @@ const MobilePreview = ({ palette }) => {
               <div className="p-4 h-96">
                 <div 
                   className="p-4 rounded-xl mb-4"
-                  style={{ backgroundColor: colors.secondary, opacity: 0.2 }}
+                  style={{ backgroundColor: colors.secondary }}
                 >
                   <h2 
                     className="font-semibold mb-2"
@@ -572,13 +572,16 @@ const MobilePreview = ({ palette }) => {
               </div>
               
               {/* Bottom Tab Bar */}
+              
               <div 
                 className="flex justify-around py-3 border-t"
                 style={{ 
                   backgroundColor: colors.background,
-                  borderTopColor: colors.secondary + '30'
+                  borderTopColor: colors.secondary 
                 }}
               >
+ 
+
                 {['Home', 'Search', 'Profile'].map((tab, i) => (
                   <div 
                     key={tab}
@@ -587,13 +590,13 @@ const MobilePreview = ({ palette }) => {
                     <div 
                       className="w-6 h-6 rounded mb-1"
                       style={{ 
-                        backgroundColor: i === 0 ? colors.accent : colors.text + '40'
+                        backgroundColor: colors.accent 
                       }}
                     ></div>
                     <span 
                       className="text-xs"
                       style={{ 
-                        color: i === 0 ? colors.accent : colors.text + '60'
+                        color:  colors.text 
                       }}
                     >
                       {tab}
