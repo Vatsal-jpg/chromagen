@@ -1,16 +1,57 @@
-import React from 'react'
+import React from "react";
 import "tailwindcss";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Loading from './Pages/Loading'; // Adjust path if needed (e.g., './components/LoadingPage')
-import Home from './Pages/Home'; // Your home page component (create if not exists)
+import Loading from "./Pages/Loading";
+import Home from "./Pages/Home";
+import Preview from "./Pages/Preview";
+import Layout from "./Pages/Layout";
+import Genrate from "./Pages/Genrate";
+import Learning from "./Pages/Learning";
 
 function App() {
   return (
-    <Router> {/* Wraps the entire app for routing */}
+    <Router>
       <Routes>
+        {/* Loading page without sidebar */}
         <Route path="/" element={<Loading />} />
-        <Route path="/home" element={<Home />} />
+
+        {/* Pages wrapped in Layout with sidebar */}
+        <Route
+          path="/home"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="/preview"
+          element={
+            <Layout>
+              <Preview />
+            </Layout>
+          }
+        />
+        <Route
+          path="/generate"
+          element={
+            <Layout>
+              <Genrate />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/learn"
+          element={
+            <Layout>
+              <Learning />
+            </Layout>
+          }
+        
+        />
+
       </Routes>
     </Router>
   );
