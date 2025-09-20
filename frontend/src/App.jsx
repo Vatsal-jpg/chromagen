@@ -11,7 +11,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Loading />} />
         <Route path="/home" element={<Home />} />
-        {/* Add more routes as needed, e.g., <Route path="/generate" element={<PaletteGenerator />} /> */}
       </Routes>
     </Router>
   );

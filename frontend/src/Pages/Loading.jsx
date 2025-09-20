@@ -88,7 +88,7 @@ const Loading = () => {
   </div>
 
 {/* === Laptop (in front of monitor) === */}
-<div className="absolute bottom-0 right-[15%] flex flex-col items-center">
+<div className="absolute -bottom-10 left-0 flex flex-col items-center ml-4">
   {/* Laptop */}
   <div className="relative w-[420px] h-[240px] bg-black rounded-md border-4 border-gray-700 shadow-xl overflow-hidden flex">
     {[...Array(5)].map((_, i) => (
@@ -104,6 +104,7 @@ const Loading = () => {
   {/* Base / Stand */}
   <div className="w-[460px] h-8 bg-gray-700 rounded-b-lg shadow-inner mt-1"></div>
 </div>
+
 
 </div>
 
