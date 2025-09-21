@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Copy, Heart, Download, Search, Filter, Palette, Star, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Library = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [copiedPalette, setCopiedPalette] = useState(null);
@@ -162,6 +164,26 @@ const Library = () => {
     setTimeout(() => setCopiedPalette(null), 2000);
   };
 
+  const handlePaletteClick = (palette) => {
+    const transformedColors = palette.colors.map((hex, index) => {
+      const roles = ['primary', 'secondary', 'accent', 'background', 'text'];
+      return {
+        id: index + 1,
+        name: `Color ${index + 1}`,
+        hex: hex,
+        role: roles[index] || 'extra'
+      };
+    });
+
+    const paletteForPreview = {
+      name: palette.name,
+      colors: transformedColors
+    };
+
+    // 2. Navigate to the preview page with the new data structure
+    navigate('/preview', { state: { generatedPalette: paletteForPreview } });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
       {/* Header */}
@@ -224,7 +246,7 @@ const Library = () => {
             <div
               key={palette.id}
               className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group cursor-pointer"
-              onClick={() => copyToClipboard(palette.colors, palette.name)}
+              onClick={() => handlePaletteClick(palette)}
             >
               {/* Color Strip */}
               <div className="flex h-32">
@@ -248,14 +270,14 @@ const Library = () => {
                       {palette.category}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                       <Heart className="w-4 h-4 text-gray-400 hover:text-red-500" />
                     </button>
                     <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                       <Download className="w-4 h-4 text-gray-400 hover:text-blue-500" />
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 
                 {/* Color Values */}

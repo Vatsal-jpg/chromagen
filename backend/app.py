@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from services.palette_generator import generate_palettes_with_gemini
 from utils.image_processor import get_important_colors 
 from flask_cors import CORS
+from services.rag_services import generate_palette_with_rag
 
 app = Flask(__name__)
 CORS(app) 
@@ -64,6 +65,7 @@ def generate_palette_rag_endpoint():
     """
     try:
         data = request.get_json()
+        print(data)
         if not data or 'prompt' not in data:
             return jsonify({"error": "A 'prompt' is required in the JSON body."}), 400
             
