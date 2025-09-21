@@ -9,6 +9,7 @@ import Layout from "./Pages/Layout";
 
 import Learning from "./Pages/Learning";
 import Library from "./Pages/Library";
+import Genrate from "./Pages/Genrate";
 
 function App() {
   return (
@@ -48,6 +49,15 @@ function App() {
           element={
             <Layout>
               <Learning />
+            </Layout>
+          }
+        
+        />
+        <Route
+          path="/genrate"
+          element={
+            <Layout>
+              <Genrate />
             </Layout>
           }
         

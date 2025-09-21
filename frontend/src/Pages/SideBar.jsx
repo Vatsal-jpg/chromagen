@@ -1,13 +1,14 @@
 // Sidebar.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Home, Eye, BookOpen, Palette } from "lucide-react"; // install lucide-react if not installed
+import { Home, Eye, BookOpen, Palette,Wand2 } from "lucide-react"; // install lucide-react if not installed
 
 const Sidebar = () => {
   const navItems = [
     { name: "Home", path: "/home", icon: <Home size={18} /> },
     { name: "Preview", path: "/preview", icon: <Eye size={18} /> },
     { name: "Library", path: "/library", icon: <BookOpen size={18} /> },
+    { name: "Genrate", path: "/genrate", icon: <Wand2 size={18} /> },
     { name: "Learn", path: "/learn", icon: <Palette size={18} /> },
   ];
 
