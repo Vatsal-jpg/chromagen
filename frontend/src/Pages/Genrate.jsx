@@ -1,27 +1,61 @@
 import React, { useState } from "react";
+import { Link2, Palette, ArrowRight, XCircle, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Link2, Palette, ArrowRight } from "lucide-react";
 
 const Genrate = () => {
   const [url, setUrl] = useState("");
   const [palette, setPalette] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
-  const generatePalette = () => {
-    // In real app, call backend API with the URL
-    // For now, we mock a generated palette
-    const generatedPalette = {
-      name: "Website Palette",
-      source: url,
-      colors: [
-        { id: 1, name: "Primary", hex: "#164b82", role: "primary" },
-        { id: 2, name: "Secondary", hex: "#4981bc", role: "secondary" },
-        { id: 3, name: "Accent", hex: "#FF6F61", role: "accent" },
-        { id: 4, name: "Background", hex: "#FFFFFF", role: "background" },
-        { id: 5, name: "Text", hex: "#1A1A1A", role: "text" },
-      ],
-    };
-    setPalette(generatedPalette);
+  // Replace with your actual API key
+  const API_KEY = "brand__LvEALaDha5vNFizgi9LjZG";
+
+  const generatePalette = async () => {
+    setLoading(true);
+    setError(null);
+    setPalette(null);
+    
+    // Simple URL validation
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        setError('Please enter a valid URL including "http://" or "https://".');
+        setLoading(false);
+        return;
+    }
+
+    try {
+      // Updated API endpoint and headers based on the new curl command
+      const apiEndpoint = `https://api.brand.dev/v1/brand/retrieve?domain=${encodeURIComponent(url)}`;
+      const response = await fetch(apiEndpoint, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEY}`
+        }
+      });
+      const data = await response.json();
+      
+      if (data.status !== 'ok' || !data.brand || !data.brand.colors) {
+        throw new Error(data.message || 'No colors found for this website.');
+      }
+
+      const generatedPalette = {
+        name: data.brand.title || "Generated Palette",
+        source: data.brand.domain || url,
+        colors: data.brand.colors.map((color, index) => ({
+          id: index,
+          name: color.name || `Color ${index + 1}`,
+          hex: color.hex,
+        })),
+      };
+      setPalette(generatedPalette);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const goToPreview = () => {
@@ -52,11 +86,20 @@ const Genrate = () => {
         </div>
         <button
           onClick={generatePalette}
-          className="px-5 py-2 rounded-lg bg-[#4981bc] text-white font-medium hover:bg-[#164b82] transition"
+          disabled={loading}
+          className="px-5 py-2 rounded-lg bg-[#4981bc] text-white font-medium hover:bg-[#164b82] transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Generate
+          {loading ? <Loader2 className="animate-spin" /> : 'Generate'}
         </button>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="flex items-center justify-center gap-2 text-red-500 bg-red-100 p-4 rounded-lg mb-4 w-full max-w-xl">
+          <XCircle size={20} />
+          <p>{error}</p>
+        </div>
+      )}
 
       {/* Palette Display */}
       {palette && (
@@ -67,7 +110,7 @@ const Genrate = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {palette.colors.map((color) => (
-              <div key={color.id} className="text-center">
+              <div key={color.hex} className="text-center">
                 <div
                   className="h-20 rounded-lg shadow"
                   style={{ backgroundColor: color.hex }}
@@ -94,3 +137,4 @@ const Genrate = () => {
 };
 
 export default Genrate;
+
