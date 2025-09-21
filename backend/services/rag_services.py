@@ -2,49 +2,59 @@ import json
 import faiss
 from sentence_transformers import SentenceTransformer
 import numpy as np
-from google import genai
+from google import genai    
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
 # --- Optimization: Load models and data once when the application starts ---
-# This ensures that these large files are not reloaded on every API call, making your app fast.
 print("Loading RAG models and data into memory...")
 
+# Initialize variables to None. They will be loaded in the try block.
+embedding_model = None
+faiss_index = None
+prompts_map = None
+palettes_map = None
+
 try:
-    # Define paths relative to the project's root directory
-    RAG_FOLDER = 'RAG'
+    # Use absolute paths to make loading robust
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(current_dir)
+    RAG_FOLDER = os.path.join(base_dir, 'RAG')
+
     INDEX_FILE = os.path.join(RAG_FOLDER, 'palettes.index')
     PROMPTS_FILE = os.path.join(RAG_FOLDER, 'prompts.json')
     PALETTES_FILE = os.path.join(RAG_FOLDER, 'palettes.npy')
 
-    # 1. Load the AI model that creates embeddings from text
+    # 1. Load the embedding model
     embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
 
-    # 2. Load the searchable FAISS index
+    # 2. Load the FAISS index
     faiss_index = faiss.read_index(INDEX_FILE)
 
-    # 3. Load the data maps for retrieving the original prompts and palettes
-    with open(PROMPTS_FILE, "r") as f:
+    # 3. Load the data maps for lookups
+    with open(PROMPTS_FILE, 'r') as f:
         prompts_map = json.load(f)
-    
     palettes_map = np.load(PALETTES_FILE, allow_pickle=True)
-
+    
     print("RAG components loaded successfully.")
+
 except FileNotFoundError as e:
-    print(f"Error: A required RAG file was not found: {e}. Please run build_index.py from the 'backend/RAG' directory first.")
-    # Set to None so the app knows the RAG system is offline
-    embedding_model = faiss_index = prompts_map = palettes_map = None
-# ------------------------------------------------------------------------------------
+    print(f"Error loading RAG files: {e}")
+    print("RAG functionality will be disabled.")
+except Exception as e:
+    print(f"An unexpected error occurred during RAG model loading: {e}")
+    print("RAG functionality will be disabled.")
+
 
 def generate_palette_with_rag(user_prompt: str, k: int = 3):
     """
     Generates a color palette using the RAG pipeline. It retrieves relevant examples
     from a knowledge base and uses them to augment a prompt for a powerful generative model.
     """
-    if not all([embedding_model, faiss_index, prompts_map, palettes_map]):
+    # This check is now robust and handles loading errors gracefully.
+    if faiss_index is None or prompts_map is None or palettes_map is None:
         print("RAG components are not loaded. Cannot generate palette.")
         return None
 
@@ -109,7 +119,7 @@ def generate_palette_with_rag(user_prompt: str, k: int = 3):
     print("Calling Gemini with augmented prompt...")
     try:
         response = client.models.generate_content(
-            model="gemini-1.5-pro-latest",
+            model="gemini-2.0-flash",
             contents=super_prompt
         )
         cleaned_text = response.text.strip().replace("```json", "").replace("```", "")
