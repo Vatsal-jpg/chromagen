@@ -1,0 +1,5 @@
+.env
+__pycache__/
+*.pyc 
+RAG/emotion_palette.csv
+RAG/raw_dataset.jsonl

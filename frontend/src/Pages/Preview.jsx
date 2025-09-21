@@ -13,6 +13,7 @@ import {
   AlertCircle,
   CheckCircle
 } from 'lucide-react';
+import { useLocation } from 'react-router-dom'
 
 // Sample palette data - in real app this would come from props or API
 const defaultPalette = {
@@ -86,8 +87,10 @@ const applyColorBlindnessFilter = (hex, filter) => {
   );
 };
 
-const Preview = ({ initialPalette = defaultPalette }) => {
+const Preview = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const initialPalette = location.state?.generatedPalette || defaultPalette;
   const [palette, setPalette] = useState(initialPalette);
   const [selectedColor, setSelectedColor] = useState(null);
   const [colorBlindnessFilter, setColorBlindnessFilter] = useState('normal');

@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const circleRefs = useRef([]);
   circleRefs.current = [];
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   
   const addToRefs = (el) => {
     if (el && !circleRefs.current.includes(el)) {
@@ -46,20 +49,28 @@ const Home = () => {
   };
 
   const handleGeneratePalette = async () => {
+    setIsLoading(true); 
     const formData = new FormData();
-    formData.append('creativeBrief', creativeBrief);
+    formData.append('prompt', creativeBrief);
     if (inspirationImage) {
       const blob = await fetch(inspirationImage).then(r => r.blob());
       formData.append('image', blob, 'inspiration.jpg');
     }
 
-    fetch('/api/generate-palette', {
+    fetch('http://127.0.0.1:5001/api/generate-palette', { 
       method: 'POST',
       body: formData
     })
       .then(res => res.json())
-      .then(data => console.log('Palette generated:', data))
-      .catch(err => console.error(err));
+      .then(data => {
+        console.log('Palette generated:', data);
+        setIsLoading(false); 
+        navigate('/preview', { state: { generatedPalette: data } });
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false); 
+      });
   };
 
   const colors = ['red', 'green', 'yellow', 'orange', 'blue', 'purple', 'pink', 'cyan', 'lime'];
@@ -140,7 +151,7 @@ const Home = () => {
         onClick={handleGeneratePalette}
         className="mt-8 px-8 py-4 bg-gradient-to-r from-[#164b82] to-[#4981bc] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
       >
-        Generate Palette
+        {isLoading ? 'Generating...' : 'Generate Palette'}
       </button>
     </div>
   );
