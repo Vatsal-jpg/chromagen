@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, request, jsonify
 from services.palette_generator import generate_palettes_with_gemini
 from utils.image_processor import get_important_colors 
@@ -53,6 +52,33 @@ def generate_palettes_endpoint():
     except Exception as e:
         # A general catch-all for any other unexpected errors
         print(f"An unexpected error occurred: {str(e)}")
+        return jsonify({"error": "An internal server error occurred."}), 500
+    
+
+# --- 2. NEW Endpoint for RAG-based Generation ---
+@app.route('/api/generate-palette-rag', methods=['POST'])
+def generate_palette_rag_endpoint():
+    """
+    API endpoint that uses the RAG service for higher quality generation.
+    Accepts a JSON request with a text prompt.
+    """
+    try:
+        data = request.get_json()
+        if not data or 'prompt' not in data:
+            return jsonify({"error": "A 'prompt' is required in the JSON body."}), 400
+            
+        user_prompt = data['prompt']
+        
+        # Call our new RAG service
+        final_palette = generate_palette_with_rag(user_prompt)
+        
+        if final_palette:
+            return jsonify(final_palette), 200
+        else:
+            return jsonify({"error": "Failed to generate palette from the RAG model."}), 500
+
+    except Exception as e:
+        print(f"An unexpected error occurred in RAG endpoint: {str(e)}")
         return jsonify({"error": "An internal server error occurred."}), 500
 
 
