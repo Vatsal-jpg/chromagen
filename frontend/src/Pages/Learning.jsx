@@ -1,4 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import img1 from '../assets/img1.jpg';
+import img2 from '../assets/img2.jpg';
+import img3 from '../assets/img3.jpg';
+import img4 from '../assets/img4.jpg';
 import {
   Play,
   BookOpen,
@@ -55,7 +59,7 @@ const Learning = () => {
      
       difficulty: "Advanced",
       youtubeUrl: "https://youtu.be/yYwEnLYT55c?si=TZIpuIOczZniVPtB",
-      thumbnailUrl: "https://i.ytimg.com/vi/9FgnTt6S8tc/maxresdefault.jpg",
+      thumbnailUrl: img1,
       channel: "Figma",
       topics: ["Design Tokens", "Color Variables", "Dark Mode", "Brand Systems"]
     },
@@ -65,8 +69,8 @@ const Learning = () => {
       description: "Understanding how colors influence user behavior and emotions",
     
       difficulty: "Intermediate",
-      youtubeUrl: "https://www.youtube.com/watch?v=x0smq5ljlSY",
-      thumbnailUrl: "https://i.ytimg.com/vi/x0smq5ljlSY/maxresdefault.jpg",
+      youtubeUrl: "https://youtu.be/x0smq5ljlf4?si=zqbNcMomtIEMakxw",
+      thumbnailUrl: img2,
       channel: "AJ&Smart",
       topics: ["Color Emotions", "Cultural Meanings", "Conversion Optimization", "A/B Testing"]
     },
@@ -77,19 +81,19 @@ const Learning = () => {
  
       difficulty: "Intermediate",
       youtubeUrl: "https://www.youtube.com/watch?v=sEDnmNtEaqQ",
-      thumbnailUrl: "https://i.ytimg.com/vi/sEDnmNtEaqQ/maxresdefault.jpg",
+      thumbnailUrl: img3,
       channel: "Google Chrome Developers",
       topics: ["Contrast Ratios", "Color Blindness", "WCAG AA/AAA", "Testing Tools"]
     },
     {
       id: 6,
-      title: "Mobile Color Design",
+      title: "60-30-10 Colour Rule",
       description: "Color considerations specific to mobile interfaces",
    
       difficulty: "Intermediate",
-      youtubeUrl: "https://www.youtube.com/watch?v=WDn-G5Hmoag",
-      thumbnailUrl: "https://i.ytimg.com/vi/WDn-G5Hmoag/maxresdefault.jpg",
-      channel: "Google Design",
+      youtubeUrl: "https://youtu.be/UWwNIMHFdW4?si=4X2lR2HVaK2cGJ9u",
+      thumbnailUrl: img4,
+      channel: "Jesse Showalter",
       topics: ["Screen Brightness", "Touch Targets", "iOS Guidelines", "Material Design"]
     },
     {
@@ -229,7 +233,7 @@ const Learning = () => {
       <div className="max-w-7xl mx-auto px-4 py-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">🗺 Learning Roadmap</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Learning Roadmap</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Structured path and curated content to master color design
           </p>
@@ -239,7 +243,7 @@ const Learning = () => {
         <div className="mb-8">
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <div className="text-sm text-gray-500">Fact of the Minute</div>
+              <div className="text-sm text-gray-500">5 second Facts</div>
               <div className="mt-2 text-xl md:text-2xl font-semibold text-gray-900">
                 {facts[currentFactIndex]}
               </div>
@@ -323,7 +327,7 @@ const Learning = () => {
         {/* Documentation listing (10 docs) */}
         <div className="mb-12">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">📚 In-Depth Documentation</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2"> In-Depth Documentation</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">Important topics across color theory, palettes, and psychology</p>
           </div>
 
@@ -388,7 +392,7 @@ const Learning = () => {
               <Star className="w-6 h-6 fill-current" />
               <div>
                 <div className="font-bold text-lg">Color Design Expert</div>
-                <div className="text-sm opacity-90">Complete all levels to earn this certification</div>
+                <div className="text-sm opacity-90">Get Certified from our platform</div>
               </div>
             </div>
           </div>
