@@ -32,7 +32,7 @@ const Genrate = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center p-8">
-      <h1 className="text-3xl font-bold text-[#164b82] mb-6">
+      <h1 className="text-3xl font-bold text-black mb-6">
         Generate Palette from Website
       </h1>
 

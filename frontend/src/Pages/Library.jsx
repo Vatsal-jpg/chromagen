@@ -190,10 +190,7 @@ const Library = () => {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Palette className="w-10 h-10" style={{ color: '#164b82' }} />
-              <span className="text-3xl font-bold" style={{ color: '#164b82' }}>ChromaGen</span>
-            </div>
+            
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Palette Library
             </h1>
