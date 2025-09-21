@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import palettesImg from "../assets/palettes.png";
-
+import logo from "../assets/logo.jpg";
+import logo1 from "../assets/logo1.png";
 
 const Loading = () => {
   const navigate = useNavigate();
@@ -52,7 +53,11 @@ const Loading = () => {
     <div className="flex flex-col lg:flex-row items-center justify-center h-screen bg-white p-6 gap-12">
       {/* Left Section */}
       <div className="flex flex-col items-start text-left max-w-lg">
-        <h1 className="text-5xl font-bold mb-4">The super fast color palettes generator!</h1>
+        <div className=" flex gap-1 items-center mb-6">
+          <img src={logo1} alt="ChromaGen Logo" className="w-32 mb-4" />
+          <h1 className="text-6xl font-serif">ChromaGen</h1>
+        </div>
+        <h2 className="text-5xl font-bold mb-4">The super fast color palettes generator!</h2>
         <p className="text-gray-600 mb-6">
           Create fine palettes inspired by thousands of beautiful color schemes.
         </p>
