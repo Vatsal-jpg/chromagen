@@ -1,4 +1,3 @@
-# test_image.py
 from utils.image_processor import get_important_colors
 
 # The name of the image you saved in your project folder

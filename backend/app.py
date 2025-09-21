@@ -2,11 +2,12 @@
 from flask import Flask, request, jsonify
 from services.palette_generator import generate_palettes_with_gemini
 from utils.image_processor import get_important_colors 
-import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app) 
 
-@app.route('/api/generate-palettes', methods=['POST'])
+@app.route('/api/generate-palette', methods=['POST'])
 def generate_palettes_endpoint():
     """
     The main API endpoint for generating color palettes.
@@ -38,7 +39,7 @@ def generate_palettes_endpoint():
         # --- 4. Call our AI service with all the processed info ---
         palettes = generate_palettes_with_gemini(
             creative_brief=creative_brief.strip(),
-            num_colors=int(num_colors),
+            # num_colors=int(num_colors),
             seed_color=seed_color
         )
 
